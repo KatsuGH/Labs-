@@ -1,0 +1,153 @@
+ using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WorkWithString
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.SetWindowSize(140,40);
+
+            string str = ("Составить описание класса одномерного массива строк. Предусмотреть возможность обращения к отдельным строкам массива по индексам и по начальной комбинации символов. Контроль выхода за пределы массивов. Выполнения операций поэлементного сцепления двух массивов с образованием нового массива. Слияние двух массивов с исключением повторяющихся элементов. Пересечения двух массивов (строки, имеющихся в обоих массивах). Вывод на экран элемента массива и всего массива. Программа должна содержать меню, позволяющее осуществлять проверку всех методов методов методов");
+            
+            Console.WriteLine("Добро пожаловать! \n - - - - - - - - - \n");
+            while (true)
+            {
+                Print();
+                int number = Convert.ToInt16(Console.ReadLine());
+                if (number == 0) break;
+                if (number == 1)
+                {
+                   CountChar(str);
+                }
+                else if (number == 2)
+                {
+                    CountSentences(str);
+                }
+                else if (number == 3)
+                {
+                    UniqueWords(str);
+                }
+                else if (number == 4)
+                {
+                    MaxLength(str);
+                }
+                
+            }
+
+        }
+        //static int InputNumber()
+        //{
+        //    int result = 0;
+        //    while (true)
+        //    {
+        //        Console.Write("Число: ");
+        //        var input = Console.ReadLine();
+        //        if (!int.TryParse(input, out result))
+        //            continue;
+        //        break;
+        //    }
+        //    Console.WriteLine();
+        //    return result;
+        //}
+        public static void Print()
+        {
+            Console.WriteLine("\n \nГлавное меню \n - - - - - - - - - \nВыбор команды: \n\n1. Подсчёт количества знаков препинания \n2. Разбиение текста на отдельные предложения  \n3. Создать массив уникальных слов из текста  \n4. Самое длинное слово из текста   \n0. Выход \n");
+
+        }
+        public static void CountChar(string str)
+        {
+            char[] chr = str.ToCharArray();
+            int i = 0;
+            foreach (var item in chr)
+            {
+                if (item == '.' || item == ',' || item == '!' || item == '?' || item == ';' || item == ':' || item == '-' || item == '(' || item == ')' || item == '"')
+                {
+                    i++;
+                }
+            }
+            Console.WriteLine("Количество знаков препинания: " + i);
+        }
+        public static void CountSentences(string str)
+        {
+            int i = 0;
+            string[] countstr = str.Split('.');
+            int count = countstr.Length;
+            Console.WriteLine("Количество предложений: " + count + "\n");
+            foreach (var item in countstr)
+            {
+                i++;
+                Console.WriteLine(i + "."+"" + item);
+            }
+
+        }
+       public static void UniqueWords(string str)
+        {
+            string[] array = str.Split(' ', ',', '.', '(', ')', ':', ';');
+            for (int i = 0; i < array.Length; i++)
+            {
+                bool itemIsUnique = true;
+                for (int j = 0; j < i; j++)
+                    if (array[i] == array[j])
+                    {
+                        itemIsUnique = false;
+                        break;
+                    }
+                if (itemIsUnique)
+                    Console.WriteLine(array[i]);
+            }
+        }
+        public static void MaxLength(string str2)
+        {
+            string[] str = str2.Split(new Char[] { ' ', ',', '.', ':', '!', '?', ';', '(', ')' }, StringSplitOptions.RemoveEmptyEntries);
+            int maxlen = 0, index = 0;
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i].Length > maxlen)
+                {
+                    maxlen = str[i].Length;
+                    index = i;
+                }
+            }
+            Console.Write("Самое длинное слово: {0}", str[index]);
+
+            Console.WriteLine();
+            string s = str[index];
+            char[] ss = s.ToCharArray();
+            if (s.Length % 2 == 0)
+            {
+                int i = ss.Length / 2;
+                for (int j = 0; j < i; j++)
+                {
+                    Console.Write(ss[j + i]);
+                }
+
+            }
+            else
+            {
+                int i = 0;
+                foreach (var item in ss)
+                {
+                    if (i == ss.Length / 2)
+                    {
+                        Console.Write("*");
+                    }
+                    else
+                    {
+                        Console.Write(item);
+                    }
+                    i++;
+                }
+
+            }
+
+
+        }
+       
+
+    }
+}
